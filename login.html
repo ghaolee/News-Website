@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+  <title>Simple News - Log In</title>
+  <link rel="stylesheet" href="stylesheet.css">
+</header>
+<body>
+  <h1>Welcome to the Simple News Website! <br></h1>
+  <h2>Log-in Here: </h2>
+  <form name="login" id="login" method="SESSION" action="login.php">
+      <label for="user"><strong>Username:</strong></label>
+      <input type="text" required placeholder="Username" name="username" id="user" /> <br>
+      <label for="pass"><strong>Password:</strong></label>
+      <input type="text" required placeholder="Password" name="password" id="pass" /> <br>
+      <input type="submit" name="LogIn" value="LogIn" />
+  </form>
+  <h2> New User? Sign Up Here: </h2>
+  <form name="signup" id="signup" method="POST" action="login.php">
+      <label for="newUser"><strong>Username:</strong></label>
+      <input type="text" required placeholder="Username" name="newUsername" id="newUser" /> <br>
+      <label for="newPass"><strong>Password:</strong></label>
+      <input type="text" required placeholder="Password" name="newPassword" id="newPass" /> <br>
+      <input type="submit" name="SignUp" value="SignUp" />
+  </form>
+  <h2>Visit as guest:</h2>
+  <form name="guest" id="guest" method="POST" action="userPage.php">
+      <input type="submit" name="guest" value="EnterWebsite" />
+  </form>
+</body>
+</html>

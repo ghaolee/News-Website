@@ -1,0 +1,19 @@
+html {
+  background-color: skyblue
+}
+
+h1 {
+  text-align: center
+}
+
+h2 {
+  text-align: center
+}
+
+h3 {
+  text-align: left;
+  font-size: 18pt
+}
+
+#login{text-align: center; font-size: 15pt}
+#signup{text-align: center; font-size: 15pt}
