@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+  <title>Submit Story</title>
+  <link rel="stylesheet" href="stylesheet.css">
+</header>
+<body>
+  <h1>Submit a Story to Simple News Website! <br></h1>
+
+  <form name = "submitArticle" id="submitArticle" method="GET" action="submitStory.php">
+    <h3>Simple Title:</h3>
+    <input type="text" required placeholder="Simple Title" name="title" value="" maxlength="60">
+    <br>
+    <h3>Your Simple Story:</h3>
+    <textarea required placeholder="Simple News Article" name="article" rows="10" cols="40"></textarea>
+    <br>
+    <h4>URL:
+    <input type ="text" placeholder="URL of Simple News Article" name="url" value="" maxlength="100">
+    </h4>
+    <input type="submit">
+  </form>
+
+</body>
+</html>

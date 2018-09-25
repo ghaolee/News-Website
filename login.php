@@ -1,5 +1,6 @@
 <?php
   require 'mysql_connect.php';
+  session_start();
 
   if (isset($_POST['SignUp'])){
     $newUser = $_POST['newUsername'];
@@ -38,7 +39,9 @@
     $stmt->close();
     //verifies passwords match
     if (password_verify($pass, $hashPass)){
-      include('userPage.php');
+      $_SESSION['role'] = "admin";
+      $_SESSION['user'] = $user;
+      header("Location: userPage.php");
     }
     else {
       echo "Your username and password do not match.";
@@ -46,5 +49,10 @@
       echo "<input type='submit' value='Return To Log In' />"; 
       echo "</form>";
     }
+  }
+  
+  if (isset($_POST['guest'])) {
+    $_SESSION['role'] = "guest";
+    header("Location: userPage.php");
   }
 ?>

@@ -7,7 +7,7 @@
 <body>
   <h1>Welcome to the Simple News Website! <br></h1>
   <h2>Log-in Here: </h2>
-  <form name="login" id="login" method="SESSION" action="login.php">
+  <form name="login" id="login" method="POST" action="login.php">
       <label for="user"><strong>Username:</strong></label>
       <input type="text" required placeholder="Username" name="username" id="user" /> <br>
       <label for="pass"><strong>Password:</strong></label>
@@ -23,8 +23,8 @@
       <input type="submit" name="SignUp" value="SignUp" />
   </form>
   <h2>Visit as guest:</h2>
-  <form name="guest" id="guest" method="POST" action="userPage.php">
-      <input type="submit" name="guest" value="EnterWebsite" />
+  <form name="guest" id="signup" method="POST" action="login.php">
+      <input type="submit" name="guest" value="Enter" />
   </form>
 </body>
 </html>
