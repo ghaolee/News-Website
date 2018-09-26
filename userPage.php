@@ -29,7 +29,7 @@
           $view = "view$id";
           ?>
           <!-- view button to show article in separate page -->
-          <form name="viewPost" id="viewPost" action="viewPost.php" method="POST">
+          <form name="viewPost" action="viewPost.php" method="POST">
             <?php echo "<input type='submit' name='view$id' value='View' />" ?>
           </form> <br>
           <?php

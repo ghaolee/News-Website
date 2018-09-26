@@ -14,7 +14,10 @@
     $newUser = $_POST['newUsername'];
     $newPass = $_POST['newPassword'];
     $hashedPass = password_hash($newPass, PASSWORD_DEFAULT);
-
+    if( !preg_match('/^[\w_\.\-]+$/', $newUser) ){
+      echo "Invalid Username";
+      exit;
+    }
     //inserts new user into table
     $stmt = $mysqli->prepare("insert into user_accounts(username, password) values (?,?)");
     if(!$stmt){
@@ -34,6 +37,10 @@
   if (isset($_POST['LogIn'])){
     $user = $_POST['username'];
     $pass = $_POST['password'];
+    if( !preg_match('/^[\w_\.\-]+$/', $user) ){
+      echo "Invalid Username";
+      exit;
+    }
     //checks if user is in table
     $stmt = $mysqli->prepare("select password from user_accounts where username = '$user'");
     if(!$stmt){
@@ -49,7 +56,9 @@
     if (password_verify($pass, $hashPass)){
       $_SESSION['role'] = "admin";
       $_SESSION["user"] = $user;
+      $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(32));
       header("Location: userPage.php");
+      exit;
     }
     else {
       echo "Your username and password do not match.";

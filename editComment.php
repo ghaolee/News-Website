@@ -48,6 +48,7 @@
       <h2>Edit Your Comment</h2>
       <form action="submitComment.php" name="editcomment" method="POST">
         <input type="text" value="<?php echo $comment_text?>" name="editedComment">
+        <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
         <input type="submit" value="Update Comment" name="submitEditComment">
       </form>
       <?php

@@ -11,6 +11,9 @@
     $article_id = $_SESSION["comment_artID"];
     $username = $_SESSION['user'];
     $comment = $_POST["comment"];
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+      die("Request forgery detected");
+    }
     //submits new comment
     $stmt = $mysqli->prepare("insert into comments (article_id, username, comment) values (?, ?, ?)");
     if(!$stmt){
@@ -25,6 +28,9 @@
     exit;
   }
   else if (isset($_POST["submitEditComment"])) {   
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+      die("Request forgery detected");
+    }
     //updates comment with edits 
     $stmt = $mysqli->prepare("update comments set comment = ? where comment_id = ?");
     if(!$stmt){

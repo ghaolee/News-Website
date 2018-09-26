@@ -20,6 +20,10 @@
     $article_story = $_POST["article_story"];
     $url = $_POST["url"];
     $likes = 0;
+    //check csrf
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+      die("Request forgery detected");
+    }
 
     //submits new story
     $stmt = $mysqli->prepare("insert into news_articles(article_name, username, article_story, url, likes) values (?, ?, ?, ?, ?)");

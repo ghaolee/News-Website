@@ -1,13 +1,3 @@
-<?php
-  require 'mysql_connect.php';
-  session_start();
-  //prevents users from accessing the site without logging in
-  if (!isset($_SESSION["user"])){
-    echo "You have to login before you can see any files.";
-    exit;
-  }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +7,17 @@
 <body>
   <h1>Simple News Website</h1>
   <?php 
+    require 'mysql_connect.php';
+    session_start();
+    //prevents users from accessing the site without logging in
+    if (!isset($_SESSION["user"])){
+      echo "You have to login before you can see any files.";
+      exit;
+    }
+    //prevents CSRF
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+      die("Request forgery detected");
+    }
 
     $article_id = 0;
     $edit = null; //true for edit, false for delete
@@ -49,18 +50,19 @@
       $stmt->close();
       $_SESSION["updateID"] = $article_id;
     ?>
-    <!-- refills the form with orignal text -->
-    <form name = "submitArticle" id="submitArticle" method="POST" action="submitEditPost.php">
-      <h3>Simple Title of Article: <?php echo $article_name; ?></h3>
-      <input type="text" required placeholder="Updated Article Title?" name="article_name" value=<?php echo htmlspecialchars($article_name); ?>> <br>
-      <h3>Your Simple Story:</h3>
-      <textarea required placeholder="Updated Article Story?" name="article_story" rows="10" cols="40"><?php echo htmlspecialchars($article_story); ?></textarea> <br>
-      <h4>URL:
-      <input type ="text" placeholder="Updated URL?" name="url" maxlength="100" value=<?php echo htmlspecialchars($url); ?>>
-      </h4>
-      <input type="submit" name="updatePost" value="Update" /> 
-    </form>
-    <?php
+      <!-- refills the form with orignal text -->
+      <form name = "submitArticle" id="submitArticle" method="POST" action="submitEditPost.php">
+        <h3>Simple Title of Article: <?php echo $article_name; ?></h3>
+        <input type="text" required placeholder="Updated Article Title?" name="article_name" value=<?php echo $article_name; ?>> <br>
+        <h3>Your Simple Story:</h3>
+        <textarea required placeholder="Updated Article Story?" name="article_story" rows="10" cols="40"><?php echo htmlspecialchars($article_story); ?></textarea> <br>
+        <h4>URL:
+        <input type ="text" placeholder="Updated URL?" name="url" maxlength="100" value=<?php echo htmlspecialchars($url); ?>>
+        </h4>
+        <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
+        <input type="submit" name="updatePost" value="Update" /> 
+      </form>
+      <?php
     }
     else {
       //delete post

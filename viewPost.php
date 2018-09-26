@@ -1,15 +1,3 @@
-<?php
-  require 'mysql_connect.php';
-  session_start();
-
-  $id = 0;
-  foreach ($_SESSION["idStoreView"] as $i) {
-    if (isset($_POST["view$i"])) {
-      $id = $_SESSION["view$i"];
-      break;
-    }
-  }
-?>
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -19,6 +7,16 @@
 <body>
   <h1>Simple News Website</h1>
   <?php
+    require 'mysql_connect.php';
+    session_start();
+
+    $id = 0;
+    foreach ($_SESSION["idStoreView"] as $i) {
+      if (isset($_POST["view$i"])) {
+        $id = $_SESSION["view$i"];
+        break;
+      }
+    }
     //selects specific post and displays it
     $stmt = $mysqli->prepare("select article_name, username, article_story, posted, url, likes from news_articles where id = $id");
     if(!$stmt){
@@ -88,6 +86,7 @@
       ?>
       <form name='edit' id='edit' method='POST' action="submitComment.php">
         <input type='text' name='comment' />
+        <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
         <input type='submit' name='submitComment' value='Submit' />
       </form>
     <?php
