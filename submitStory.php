@@ -5,51 +5,37 @@
   <link rel="stylesheet" href="stylesheet.css">
 </header>
 <body>
+
   <?php
     require 'mysql_connect.php';
-      if (isset($_GET['submit'])){
-        if(!isset($_GET['url'])){
-          $title = $_GET['title'];
-          $article = nl2br($_GET['article']);
-          //$date = date('m/d/Y h:i:s a', time()); How to do posted portion
+    session_start();
+    //prevents users from accessing the site without logging in
+    if (!isset($_SESSION["user"])){
+      echo "You have to login before you can see any files.";
+      exit;
+    }
 
-          //Storing Article Title and Article into Database
-          $stmt = $mysqli->prepare("insert into news_articles (article_name, username, article_story, posted) values (?, ?, ?, ?)");
-          if(!$stmt){
-          	printf("Query Prep Failed: %s\n", $mysqli->error);
-          	exit;
-          }
-          $stmt->bind_param('sss', $title, $username, $article, $posted);
-          $stmt->execute();
-          $stmt->close();
+    $article_name = $_POST["article_name"];
+    $username = $_SESSION["user"];
+    $article_story = $_POST["article_story"];
+    $url = $_POST["url"];
+    $likes = 0;
 
-          echo "Your Simple News Article has been posted!";
-          echo "<form name='returnUserPage' id='returnUserPage' method='POST' action='userPage.php'>";
-          echo "<input type='submit' value='Return To User Page' />";
-          echo "</form>";
-        }
-        else{
-          $title = $_GET['title'];
-          $article = nl2br($_GET['article']);
-          $url = $_GET['url'];
-          //$date = date('m/d/Y h:i:s a', time()); How to do posted portion
+    //submits new story
+    $stmt = $mysqli->prepare("insert into news_articles(article_name, username, article_story, url, likes) values (?, ?, ?, ?, ?)");
+    if(!$stmt){
+      printf("Query Prep Failed: %s\n", $mysqli->error);
+      exit;
+    }
 
-          //Storing Article Title and Article into Database
-          $stmt = $mysqli->prepare("insert into news_articles (article_name, username, article_story, url, posted) values (?, ?, ?, ?, ?)");
-          if(!$stmt){
-          	printf("Query Prep Failed: %s\n", $mysqli->error);
-          	exit;
-          }
-          $stmt->bind_param('sss', $title, $username, $article, $url, $posted);
-          $stmt->execute();
-          $stmt->close();
+    $stmt->bind_param('sssss', $article_name, $username, $article_story, $url, $likes);
+    $stmt->execute();
+    $stmt->close();
 
-          echo "Your Simple News Article has been posted!";
-          echo "<form name='returnUserPage' id='returnUserPage' method='POST' action='userPage.php'>";
-          echo "<input type='submit' value='Return To User Page' />";
-          echo "</form>";
-        }
-      }
    ?>
+   <h3>Story Posted!!</h3>
+   <form action="userPage.php" method="POST" name="return">
+     <input type="submit" value="Return to Homepage" name="return">
+   </form>
 </body>
 </html>

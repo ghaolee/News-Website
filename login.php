@@ -1,7 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>New User Created</title>
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
 <?php
   require 'mysql_connect.php';
   session_start();
 
+  //creates a new hashed password
   if (isset($_POST['SignUp'])){
     $newUser = $_POST['newUsername'];
     $newPass = $_POST['newPassword'];
@@ -40,7 +48,7 @@
     //verifies passwords match
     if (password_verify($pass, $hashPass)){
       $_SESSION['role'] = "admin";
-      $_SESSION['user'] = $user;
+      $_SESSION["user"] = $user;
       header("Location: userPage.php");
     }
     else {
@@ -56,3 +64,6 @@
     header("Location: userPage.php");
   }
 ?>
+
+</body>
+</html>
