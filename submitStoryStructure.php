@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<header>
+<head>
   <title>Submit Story</title>
   <link rel="stylesheet" href="stylesheet.css">
-</header>
+</head>
 <body>
+  <?php session_start(); ?>
   <h1>Submit a Story to Simple News Website! <br></h1>
   <form name = "submitArticle" id="submitArticle" method="POST" action="submitStory.php">
     <h3>Simple Title:</h3>

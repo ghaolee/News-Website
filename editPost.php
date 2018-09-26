@@ -53,7 +53,7 @@
       <!-- refills the form with orignal text -->
       <form name = "submitArticle" id="submitArticle" method="POST" action="submitEditPost.php">
         <h3>Simple Title of Article: <?php echo $article_name; ?></h3>
-        <input type="text" required placeholder="Updated Article Title?" name="article_name" value=<?php echo $article_name; ?>> <br>
+        <input type="text" required placeholder="Updated Article Title?" name="article_name" value=<?php echo htmlspecialchars($article_name); ?>> <br>
         <h3>Your Simple Story:</h3>
         <textarea required placeholder="Updated Article Story?" name="article_story" rows="10" cols="40"><?php echo htmlspecialchars($article_story); ?></textarea> <br>
         <h4>URL:
